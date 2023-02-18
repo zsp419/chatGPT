@@ -16,10 +16,10 @@ public class QaModeStrategyService implements ChatGPTStrategyService {
         Map<String,String> headers = new HashMap<>();
         headers.put("Content-Type","application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-        json.set("model","text-curie-001");
+        json.set("model","text-davinci-003");
         json.set("prompt", question);
-        json.set("temperature",0);
-        json.set("max_tokens",100);
+        json.set("temperature",0.5);
+        json.set("max_tokens",2048);
         json.set("top_p",1);
         json.set("frequency_penalty",0.0);
         json.set("presence_penalty",0.0);
