@@ -1,47 +1,35 @@
-package com.bht.chatgpt;
+package com.bht.chatgpt.service;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.bht.chatgpt.enums.ModeEnum;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/chatGPT")
-public class ChatGPTController {
+@Service("qa")
+public class QaModeService implements ChatGPTService{
     @Value("${token}")
     private String token;
-    @RequestMapping("getAnswer")
-    public Map<String, String> getAnswer(String question){
-        return getResultMap(question);
-    }
 
-    @PostMapping("getResult")
-    public Map<String, String> getResult(@RequestBody JSONObject jsonObject){
-        String question = jsonObject.getStr("question");
-        return getResultMap(question);
-    }
-
-    private Map<String, String> getResultMap(String question) {
+    public Map<String, String> getResultMap(String question) {
         Map<String,String> headers = new HashMap<>();
         headers.put("Content-Type","application/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-        //选择模型
-        json.set("model","text-davinci-003");
-        //添加我们需要输入的内容
+        json.set("model","text-curie-001");
         json.set("prompt", question);
-        json.set("temperature",0.9);
-        json.set("max_tokens",200);
-        json.set("top_p",1);
-        json.set("frequency_penalty",0.0);
-        json.set("presence_penalty",0.6);
+        json.set("temperature",0.5);
+        json.set("max_tokens",260);
+        json.set("top_p",1.0);
+        json.set("frequency_penalty",0.5);
+        json.set("presence_penalty",0.0);
+        json.set("stop","stop");
 
         HttpResponse response = HttpRequest.post("https://api.openai.com/v1/completions")
                 .headerMap(headers, false)
