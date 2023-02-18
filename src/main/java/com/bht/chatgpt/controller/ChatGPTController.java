@@ -1,8 +1,8 @@
 package com.bht.chatgpt.controller;
 
 import cn.hutool.json.JSONObject;
-import com.bht.chatgpt.service.ChatGPTService;
-import com.bht.chatgpt.service.ChatModeService;
+import com.bht.chatgpt.service.ChatGPTStrategyService;
+import com.bht.chatgpt.service.ChatModeStrategyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +16,8 @@ import java.util.Map;
 @RequestMapping("/chatGPT")
 public class ChatGPTController {
 
-    private final ChatModeService chatGPTService;
-    private final Map<String, ChatGPTService> chatGPTServiceMap;
+    private final ChatModeStrategyService chatGPTService;
+    private final Map<String, ChatGPTStrategyService> chatGPTServiceMap;
 
     @RequestMapping("getAnswer")
     public Map<String, String> getAnswer(String question){
